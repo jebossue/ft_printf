@@ -3,40 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_params.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jebossue <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: afourcad <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/31 16:31:09 by jebossue          #+#    #+#             */
-/*   Updated: 2017/01/31 18:22:23 by jebossue         ###   ########.fr       */
+/*   Created: 2017/01/30 15:33:00 by afourcad          #+#    #+#             */
+/*   Updated: 2017/02/13 16:55:51 by jebossue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
+#include "libft.h"
 #include "ft_printf.h"
 
-void	ft_check_flags(char **str, t_arg *param)
+int	ft_check_flags(char **str, t_arg *param)
 {
-	param->param_good = TRUE;
+	param->param_good = FALSE;
 	while (**str == '#' || **str == '0' || **str == '-' || **str == '+' ||
 			**str == ' ')
 	{
-		if (**str == '#' && param->sharp != TRUE)
+		if (**str == '#')
 			param->sharp = TRUE;
-		else if (**str == '0' && param->null != TRUE)
+		else if (**str == '0')
 			param->null = TRUE;
-		else if (**str == '-' && param->minus != TRUE)
+		else if (**str == '-')
 			param->minus = TRUE;
-		else if (**str == '+' && param->plus != TRUE)
+		else if (**str == '+')
 			param->plus = TRUE;
-		else if (**str == ' ' && param->space != TRUE)
+		else if (**str == ' ')
 			param->space = TRUE;
-		else
-			param_good = FALSE;
 		++(*str);
+		param->param_good = TRUE;
 	}
+	return (param->param_good);
 }
 
-void	ft_check_width(char **str, t_arg *param)
+int	ft_check_width(char **str, t_arg *param)
 {
 	if (ft_isdigit(**str) == GOOD)
 	{
@@ -44,33 +43,37 @@ void	ft_check_width(char **str, t_arg *param)
 		param->width = ft_atoi(*str);
 		while (ft_isdigit(**str) == GOOD)
 			++(*str);
+		printf("param->width = %d\n", param->width);
 	}
 	else
-		param->is_width == FALSE;
+		param->is_width = FALSE;
+	return (param->is_width);
 }
 
-void	ft_check_precision(char **str, t_arg *param)
+int	ft_check_precision(char **str, t_arg *param)
 {
-	if (**str == '.' && ft_isdigit(**str + 1) == 1)
+	if (**str == '.' && ft_isdigit(*(*str + 1)) == 1)
 	{
 		++(*str);
 		param->precision = ft_atoi(*str);
 		while (ft_isdigit(**str) == 1)
 			++(*str);
 		param->is_pre = TRUE;
+		printf("param->precision = %d\n", param->precision);
 	}
 	else
 		param->is_pre = FALSE;
+	return (param->is_pre);
 }
 
-void	ft_check_length(char **str, t_arg *param)
+int	ft_check_length(char **str, t_arg *param)
 {
-	if (**str == 'h' && **str + 1 == 'h')
+	if (**str == 'h' && *(*str + 1) == 'h')
 	{
 		param->len = hh;
 		(*str) += 2;
 	}
-	else if (**str == 'l' && **str + 1 == 'l')
+	else if (**str == 'l' && *(*str + 1) == 'l')
 	{
 		param->len = ll;
 		(*str) += 2;
@@ -89,4 +92,5 @@ void	ft_check_length(char **str, t_arg *param)
 	}
 	else
 		param->len = none;
+	return (param->len);
 }

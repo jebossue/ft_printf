@@ -3,56 +3,72 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afourcad <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jebossue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/11 16:30:27 by afourcad          #+#    #+#             */
-/*   Updated: 2017/01/31 18:17:58 by jebossue         ###   ########.fr       */
+/*   Created: 2016/11/05 15:42:25 by jebossue          #+#    #+#             */
+/*   Updated: 2016/11/22 14:05:29 by jebossue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static unsigned int	ft_size_itoa(int n, unsigned int size)
+static int	ft_nbrnumeration(int n)
 {
-	if (n == 0)
-		return (size);
-	size = ft_size_itoa(n / 10, size + 1);
-	return (size);
-}
+	int	length;
 
-static void			ft_get_itoa(long n, int size, char **nbr)
-{
-	int				is_neg;
-
-	is_neg = n < 0 ? 1 : 0;
-	if (is_neg)
+	length = 0;
+	if (n == -2147483648)
 	{
-		(*nbr)[0] = '-';
+		n = 147483648;
+		length = 2;
+	}
+	if (n < 0)
+	{
 		n = -n;
+		length++;
 	}
 	while (n >= 10)
 	{
-		(*nbr)[size] = (n % 10) + '0';
 		n = n / 10;
-		size--;
+		length++;
 	}
-	(*nbr)[size] = n + '0';
+	length++;
+	return (length);
 }
 
-char				*ft_itoa(int n)
+static int	ft_min(char *str, int i)
 {
-	int				size;
-	char			*nbr;
-	int				is_neg;
+	str[0] = '-';
+	str[1] = '2';
+	i = 2;
+	return (i);
+}
 
-	size = ft_size_itoa(n, 0);
-	is_neg = n < 0 ? 1 : 0;
-	if (is_neg || n == 0)
-		size++;
-	if ((nbr = (char*)malloc(sizeof(char) * size + 1)) == NULL)
+char		*ft_itoa(int n)
+{
+	char	*str;
+	int		i;
+	int		length;
+
+	length = ft_nbrnumeration(n) + 1;
+	if ((str = (char*)malloc(sizeof(*str) * (length))) == NULL)
 		return (NULL);
-	nbr[size] = '\0';
-	size--;
-	ft_get_itoa((long)n, size, &nbr);
-	return (nbr);
+	i = 0;
+	str[length - 1] = '\0';
+	if (n == -2147483648)
+	{
+		i = ft_min(str, i);
+		n = 147483648;
+	}
+	if (n < 0)
+	{
+		n = -n;
+		str[i++] = '-';
+	}
+	while (length-- > 0 && i != length)
+	{
+		str[length - 1] = n % 10 + '0';
+		n = n / 10;
+	}
+	return (str);
 }

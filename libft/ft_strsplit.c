@@ -3,68 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afourcad <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jebossue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/11 13:18:14 by afourcad          #+#    #+#             */
-/*   Updated: 2016/11/15 18:10:59 by afourcad         ###   ########.fr       */
+/*   Created: 2016/11/04 16:24:51 by jebossue          #+#    #+#             */
+/*   Updated: 2017/01/11 18:33:47 by jebossue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static	char		*ft_next_word(const char *s, char c)
+static void	ft_doit(char **array, char const *s, char c, int j)
 {
-	unsigned int	i;
+	int	i;
+	int start;
+	int len;
 
-	i = 0;
-	while (s[i] != c && s[i])
-		i++;
-	while (s[i] == c && s[i])
-		i++;
-	return ((char*)s + i);
-}
-
-static unsigned int	ft_nbr_words(const char *s, char c)
-{
-	unsigned int	nbr_words;
-
-	nbr_words = 0;
-	while (*s)
+	i = -1;
+	while (s[++i])
 	{
-		s = ft_next_word(s, c);
-		nbr_words++;
+		len = 0;
+		while (s[i] != c && s[i])
+		{
+			if (i == 0 || s[i - 1] == c)
+			{
+				j++;
+				start = i;
+			}
+			i++;
+			len++;
+		}
+		if (i != 0 && s[i - 1] != c)
+			array[j] = ft_strsub(s, start, len);
+		if (s[i] == '\0')
+			i--;
 	}
-	return (nbr_words);
+	array[j + 1] = NULL;
 }
 
-static int			ft_word_len(const char *s, char c)
+char		**ft_strsplit(char const *s, char c)
 {
-	unsigned int	len;
+	char	**array;
+	int		nbrwords;
 
-	len = 0;
-	while (s[len] != c && s[len])
-		len++;
-	return (len);
-}
-
-char				**ft_strsplit(char const *s, char c)
-{
-	char			**split;
-	unsigned int	i;
-
-	if (!s || !c || c == '\0')
+	if (!s)
 		return (NULL);
-	i = 0;
-	while (*s == c && *s)
-		s++;
-	if ((split = malloc(sizeof(char *) * (ft_nbr_words(s, c) + 1))) == NULL)
+	nbrwords = ft_nbrwords(s, c) + 1;
+	if ((array = (char**)malloc(sizeof(*array) * nbrwords)) == NULL)
 		return (NULL);
-	while (*s)
-	{
-		split[i] = ft_strndup(s, ft_word_len(s, c));
-		s = ft_next_word(s, c);
-		i++;
-	}
-	split[i] = NULL;
-	return (split);
+	ft_doit(array, s, c, -1);
+	return (array);
 }

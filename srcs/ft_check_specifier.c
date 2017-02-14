@@ -5,60 +5,69 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jebossue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/31 16:31:52 by jebossue          #+#    #+#             */
-/*   Updated: 2017/01/31 18:24:43 by jebossue         ###   ########.fr       */
+/*   Created: 2017/02/13 17:00:36 by jebossue          #+#    #+#             */
+/*   Updated: 2017/02/13 17:00:38 by jebossue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "ft_printf.h"
 
-void	ft_check_specifier_2(char **str, t_arg *param)
+void	ft_find_specifier_2(char **str, t_arg *param)
 {
 	if (**str == 'O' || **str == 'u' || **str == 'U' || **str == 'x'
 			|| **str == 'X' || **str == 'C' || **str == '%')
 	{
 		if (**str == 'O')
-			param->len = O;
+			param->spec = O;
 		else if (**str == 'u')
-			param->len = u;	
+			param->spec = u;	
 		else if (**str == 'U')
-			param->len = U;
+			param->spec = U;
 		else if (**str == 'x')
-			param->len = x;
+			param->spec = x;
 		else if (**str == 'X')
-			param->len = X;
+			param->spec = X;
 		else if (**str == 'C')
-			param->len = c;
+			param->spec = C;
 		else if (**str == '%')
-			param->len = percent;
-		++(*str);
+			param->spec = percent;
+		param->specifier = **str;
 	}
-	else
-		param->len = none;
 }
 
-void	ft_check_specifier(char **str, t_arg *param)
+int		ft_find_specifier(char **str, t_arg *param)
 {
 	if (**str == 's' || **str == 'S' || **str == 'p' || **str == 'd'
 			|| **str == 'D' || **str == 'i' || **str == 'o')
 	{
 		if (**str == 's')
-			param->len = s;
+			param->spec = s;
 		else if (**str == 'S')
-			param->len = S;
+			param->spec = S;
 		else if (**str == 'p')
-			param->len = p;
+			param->spec = p;
 		else if (**str == 'd')
-			param->len = d;
+			param->spec = d;
 		else if (**str == 'D')
-			param->len = D;
+			param->spec = D;
 		else if (**str == 'i')
-			param->len = i;
+			param->spec = i;
 		else if (**str == 'o')
-			param->len = o;
-		++(*str);
+			param->spec = o;
+		param->specifier = **str;
 	}
 	else
-		ft_check_specifier_2(str, param);
+		ft_find_specifier_2(str, param);
+	return (param->spec);
 }
+
+/*void	ft_find_specifier(char **str, t_arg *param)
+{
+	while (**str && (**str != 's' && **str != 'S' && **str != 'p'
+				&& **str != 'd' && **str != 'D' && **str != 'i' && **str != 'o'
+				&& **str != 'O' && **str != 'u' && **str != 'U' && **str != 'x'
+				&& **str != 'X' && **str != 'C' && **str != '%'))
+		++(*str);
+	param->specifier = **str;
+	ft_check_specifier(str, param);
+}*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afourcad <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jebossue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/04 16:53:55 by afourcad          #+#    #+#             */
-/*   Updated: 2016/11/07 21:12:27 by afourcad         ###   ########.fr       */
+/*   Created: 2016/11/04 11:52:56 by jebossue          #+#    #+#             */
+/*   Updated: 2016/11/24 16:25:11 by jebossue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_strcpy(char *dest, const char *src)
 {
-	size_t	i;
+	unsigned int	i;
 
 	i = 0;
 	while (src[i])

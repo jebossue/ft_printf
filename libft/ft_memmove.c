@@ -3,35 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afourcad <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jebossue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/04 16:51:11 by afourcad          #+#    #+#             */
-/*   Updated: 2016/11/09 16:13:24 by afourcad         ###   ########.fr       */
+/*   Created: 2016/11/04 11:51:18 by jebossue          #+#    #+#             */
+/*   Updated: 2017/01/11 18:24:53 by jebossue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memmove(void *dst, const void *src, size_t n)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	size_t			i;
-	unsigned char	*tmp_dst;
-	unsigned char	*tmp_src;
+	size_t		i;
+	char		*tmp_dest;
+	const char	*tmp_src;
 
-	i = (dst < src) ? 0 : n;
-	tmp_dst = (unsigned char *)dst;
-	tmp_src = (unsigned char *)src;
-	if (dst < src)
+	i = 0;
+	tmp_dest = dest;
+	tmp_src = src;
+	if (dest <= src)
+	{
 		while (i < n)
 		{
-			tmp_dst[i] = tmp_src[i];
+			tmp_dest[i] = tmp_src[i];
 			i++;
 		}
+	}
 	else
-		while (i)
+	{
+		while (n)
 		{
-			tmp_dst[i - 1] = tmp_src[i - 1];
-			i--;
+			tmp_dest[n - 1] = tmp_src[n - 1];
+			n--;
 		}
-	return (dst);
+	}
+	return (dest);
 }

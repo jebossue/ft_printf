@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afourcad <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jebossue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/04 16:43:51 by afourcad          #+#    #+#             */
-/*   Updated: 2016/11/09 20:08:35 by afourcad         ###   ########.fr       */
+/*   Created: 2016/11/04 11:45:02 by jebossue          #+#    #+#             */
+/*   Updated: 2017/02/01 17:05:13 by jebossue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,26 @@
 
 int	ft_atoi(const char *nptr)
 {
+	int				negativ;
 	unsigned int	i;
-	int				nbr;
-	int				is_neg;
+	long int		nb;
 
+	negativ = 1;
 	i = 0;
-	nbr = 0;
-	is_neg = 1;
-	while (nptr[i] == ' ' || nptr[i] == '\n' || nptr[i] == '\t'
-			|| nptr[i] == '\r' || nptr[i] == '\f' || nptr[i] == '\v')
+	nb = 0;
+	while (nptr[i] && (nptr[i] == ' ' || nptr[i] == '\t' || nptr[i] == '\n'
+				|| nptr[i] == '\v' || nptr[i] == '\f' || nptr[i] == '\r'))
 		i++;
-	if (nptr[i] == '+' || nptr[i] == '-')
+	if (nptr[i] == '-' || nptr[i] == '+')
 	{
 		if (nptr[i] == '-')
-			is_neg = -1;
+			negativ = -1;
 		i++;
 	}
 	while (nptr[i] >= '0' && nptr[i] <= '9')
 	{
-		nbr = nbr * 10 + nptr[i] - 48;
+		nb = nb * 10 + nptr[i] - 48;
 		i++;
 	}
-	return (nbr * is_neg);
+	return ((int)(nb * negativ));
 }
