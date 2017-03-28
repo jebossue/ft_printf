@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzerocustom.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afourcad <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jebossue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/24 18:52:09 by afourcad          #+#    #+#             */
-/*   Updated: 2017/01/31 18:16:56 by jebossue         ###   ########.fr       */
+/*   Created: 2017/03/28 15:57:20 by jebossue          #+#    #+#             */
+/*   Updated: 2017/03/28 15:57:23 by jebossue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_bzerocutom(void *s, size_t n, char c)
+void	*ft_bzerocustom(void *s, size_t n, char c)
 {
 	char			*str;
 	unsigned int	i;
 
 	i = 0;
 	str = s;
-	while (i < n - 1)
+	while (i < n)
 	{
 		str[i] = c;
 		i++;
 	}
-	str[i] = '\0';
+	return (s + n);
 }

@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memadd.c                                        :+:      :+:    :+:   */
+/*   ft_write_dec_flags.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jebossue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/28 16:04:56 by jebossue          #+#    #+#             */
-/*   Updated: 2017/03/28 16:04:58 by jebossue         ###   ########.fr       */
+/*   Created: 2017/03/28 17:20:04 by jebossue          #+#    #+#             */
+/*   Updated: 2017/03/28 17:20:07 by jebossue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_printf.h"
 #include "libft.h"
 
-void	*ft_memadd(void *dest, const void *src, int beg, size_t n)
+char	*ft_write_dec_plus(char *buff, int is_neg)
 {
-	unsigned int	i;
-	const char		*tmp_src;
-	char			*tmp_dest;
+	*buff = is_neg == TRUE ? '-' : '+';
+	++buff;
+	return (buff);
+}
 
-	i = 0;
-	tmp_src = src;
-	tmp_dest = dest;
-	while (i < n)
-	{
-		tmp_dest[beg] = tmp_src[i];
-		i++;
-		beg++;
-	}
-	return (dest);
+char	*ft_write_dec_space(char *buff)
+{
+	*buff = ' ';
+	++buff;
+	return (buff);
 }

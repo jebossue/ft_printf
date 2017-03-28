@@ -1,31 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memadd.c                                        :+:      :+:    :+:   */
+/*   ft_utf8_len.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jebossue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/28 16:04:56 by jebossue          #+#    #+#             */
-/*   Updated: 2017/03/28 16:04:58 by jebossue         ###   ########.fr       */
+/*   Created: 2017/03/28 16:07:22 by jebossue          #+#    #+#             */
+/*   Updated: 2017/03/28 16:07:36 by jebossue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memadd(void *dest, const void *src, int beg, size_t n)
+int	ft_utf8_len(uintmax_t nbr)
 {
-	unsigned int	i;
-	const char		*tmp_src;
-	char			*tmp_dest;
-
-	i = 0;
-	tmp_src = src;
-	tmp_dest = dest;
-	while (i < n)
+	if (MB_CUR_MAX == 1)
 	{
-		tmp_dest[beg] = tmp_src[i];
-		i++;
-		beg++;
+		if (nbr <= 255)
+			return (1);
+		else
+			return (-1);
 	}
-	return (dest);
+	if ((nbr >= 0xd800 && nbr <= 0xdfff)
+			|| (nbr >= 0x110000 && nbr <= 0x1fffff))
+		return (-1);
+	if (nbr <= 0x7f)
+		return (1);
+	else if (nbr > 0x7f && nbr <= 0xfff)
+		return (2);
+	else if (nbr > 0xfff && nbr <= 0xffff)
+		return (3);
+	else if (nbr > 0xffff && nbr <= 0x1fffff)
+		return (4);
+	else
+		return (-1);
 }

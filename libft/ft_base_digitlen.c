@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memadd.c                                        :+:      :+:    :+:   */
+/*   ft_base_digitlen.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jebossue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/28 16:04:56 by jebossue          #+#    #+#             */
-/*   Updated: 2017/03/28 16:04:58 by jebossue         ###   ########.fr       */
+/*   Created: 2017/03/28 15:56:30 by jebossue          #+#    #+#             */
+/*   Updated: 2017/03/28 15:56:33 by jebossue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memadd(void *dest, const void *src, int beg, size_t n)
+int	ft_base_digitlen(uintmax_t nbr, int base)
 {
-	unsigned int	i;
-	const char		*tmp_src;
-	char			*tmp_dest;
+	int	ln;
 
-	i = 0;
-	tmp_src = src;
-	tmp_dest = dest;
-	while (i < n)
+	ln = 0;
+	if (nbr == 0)
+		ln = 1;
+	while (nbr != 0)
 	{
-		tmp_dest[beg] = tmp_src[i];
-		i++;
-		beg++;
+		nbr = nbr / base;
+		++ln;
 	}
-	return (dest);
+	return (ln);
 }

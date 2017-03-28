@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_params.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: afourcad <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jebossue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/30 15:33:00 by afourcad          #+#    #+#             */
-/*   Updated: 2017/02/13 16:55:51 by jebossue         ###   ########.fr       */
+/*   Created: 2017/03/28 17:18:16 by jebossue          #+#    #+#             */
+/*   Updated: 2017/03/28 17:18:19 by jebossue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,60 +37,66 @@ int	ft_check_flags(char **str, t_arg *param)
 
 int	ft_check_width(char **str, t_arg *param)
 {
+	char	ok;
+
+	ok = 0;
 	if (ft_isdigit(**str) == GOOD)
 	{
 		param->is_width = TRUE;
 		param->width = ft_atoi(*str);
 		while (ft_isdigit(**str) == GOOD)
 			++(*str);
-		printf("param->width = %d\n", param->width);
+		ok = 1;
 	}
-	else
+	else if (param->is_width != TRUE)
 		param->is_width = FALSE;
-	return (param->is_width);
+	return (ok);
 }
 
 int	ft_check_precision(char **str, t_arg *param)
 {
-	if (**str == '.' && ft_isdigit(*(*str + 1)) == 1)
+	char	ok;
+
+	ok = 0;
+	if (**str == '.')
 	{
 		++(*str);
 		param->precision = ft_atoi(*str);
 		while (ft_isdigit(**str) == 1)
 			++(*str);
 		param->is_pre = TRUE;
-		printf("param->precision = %d\n", param->precision);
+		ok = 1;
 	}
-	else
+	else if (param->is_pre != TRUE)
 		param->is_pre = FALSE;
-	return (param->is_pre);
+	return (ok);
 }
 
 int	ft_check_length(char **str, t_arg *param)
 {
-	if (**str == 'h' && *(*str + 1) == 'h')
-	{
-		param->len = hh;
-		(*str) += 2;
-	}
-	else if (**str == 'l' && *(*str + 1) == 'l')
-	{
-		param->len = ll;
-		(*str) += 2;
-	}
-	else if (**str == 'h' || **str == 'l' || **str == 'j' || **str == 'z')
+	t_length	len_tmp;
+
+	len_tmp = 0;
+	if (**str == 'h' || **str == 'l' || **str == 'j' || **str == 'z')
 	{
 		if (**str == 'h')
-			param->len = h;
+		{
+			len_tmp = *(*str + 1) == 'h' ? hh : h;
+			(*str) += len_tmp == hh ? 1 : 0;
+		}
 		else if (**str == 'l')
-			param->len = l;
+		{
+			len_tmp = *(*str + 1) == 'l' ? ll : l;
+			(*str) += len_tmp == ll ? 1 : 0;
+		}
 		else if (**str == 'j')
-			param->len = j;
+			len_tmp = j;
 		else if (**str == 'z')
-			param->len = z;
+			len_tmp = z;
 		++(*str);
+		param->len = param->len < len_tmp ? len_tmp : param->len;
 	}
-	else
-		param->len = none;
+	else if (param->len != none)
+		return (0);
 	return (param->len);
 }

@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memadd.c                                        :+:      :+:    :+:   */
+/*   ft_free_printf.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jebossue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/28 16:04:56 by jebossue          #+#    #+#             */
-/*   Updated: 2017/03/28 16:04:58 by jebossue         ###   ########.fr       */
+/*   Created: 2017/03/28 17:18:47 by jebossue          #+#    #+#             */
+/*   Updated: 2017/03/28 17:18:50 by jebossue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_printf.h"
 #include "libft.h"
 
-void	*ft_memadd(void *dest, const void *src, int beg, size_t n)
+void	ft_free_param(t_arg *param)
 {
-	unsigned int	i;
-	const char		*tmp_src;
-	char			*tmp_dest;
+	if (param == NULL)
+		return ;
+	ft_free_param(param->next);
+	free(param);
+}
 
-	i = 0;
-	tmp_src = src;
-	tmp_dest = dest;
-	while (i < n)
-	{
-		tmp_dest[beg] = tmp_src[i];
-		i++;
-		beg++;
-	}
-	return (dest);
+void	ft_free_printf(char *buff, t_arg *param)
+{
+	free(buff);
+	ft_free_param(param);
 }

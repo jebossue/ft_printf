@@ -1,32 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa_base.c                                     :+:      :+:    :+:   */
+/*   ft_print_bit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jebossue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/28 16:04:25 by jebossue          #+#    #+#             */
-/*   Updated: 2017/03/28 16:04:28 by jebossue         ###   ########.fr       */
+/*   Created: 2017/03/28 16:05:26 by jebossue          #+#    #+#             */
+/*   Updated: 2017/03/28 16:05:28 by jebossue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_itoa_base(uintmax_t nbr, int base, char *abc)
+void	ft_print_octet(int nb)
 {
-	char	*result;
-	int		i;
+	int	bit;
+	int	mask;
+	int	i;
 
-	i = ft_base_digitlen(nbr, base);
-	if ((result = malloc(sizeof(char) * i + 1)) == NULL)
-		return (NULL);
-	result[i] = '\0';
-	i--;
+	i = 7;
+	mask = 128;
 	while (i >= 0)
 	{
-		result[i] = abc[nbr % base];
-		nbr = nbr / base;
+		bit = (nb & mask) >> i;
+		ft_putnbr(bit);
+		mask >>= 1;
 		i--;
 	}
-	return (result);
+	ft_putchar('\n');
+}
+
+void	ft_print_bit(int nb)
+{
+	ft_print_octet(nb);
+	if (nb > 0x007f && nb <= 0xfffff)
+	{
+		ft_print_octet(nb >> 8);
+		if (nb > 0x07ff && nb <= 0xfffff)
+		{
+			ft_print_octet(nb >> 16);
+			if (nb > 0xffff && nb < 0xfffff)
+				ft_print_octet(nb >> 24);
+		}
+	}
+	ft_putchar('\n');
 }
