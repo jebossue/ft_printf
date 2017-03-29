@@ -6,7 +6,7 @@
 /*   By: jebossue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 15:54:47 by jebossue          #+#    #+#             */
-/*   Updated: 2017/03/28 15:54:51 by jebossue         ###   ########.fr       */
+/*   Updated: 2017/03/29 18:24:09 by jebossue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,15 @@
 # define ERROR 0
 # define GOOD 1
 # define NO 0
+# define EOC		"\033[00m"
+# define BLACK		"\033[30m"
+# define RED		"\033[31m"
+# define GREEN		"\033[32m"
+# define YELLOW		"\033[33m"
+# define BLUE		"\033[34m"
+# define MAGENTA	"\033[35m"
+# define CYAN		"\033[36m"
+# define WHITE		"\033[37m"
 
 typedef enum	e_specifier
 {

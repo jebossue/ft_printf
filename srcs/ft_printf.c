@@ -6,7 +6,7 @@
 /*   By: jebossue <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 17:19:20 by jebossue          #+#    #+#             */
-/*   Updated: 2017/03/28 17:19:22 by jebossue         ###   ########.fr       */
+/*   Updated: 2017/03/29 18:19:13 by jebossue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,35 @@ int		ft_check_full_len(const char *format, va_list *ap, t_arg *param)
 		++ln;
 		++format;
 	}
+	return (ln);
+}
+
+int		ft_dprintf(int fd, const char *restrict format, ...)
+{
+	va_list ap;
+	int		ln;
+	char	*buff;
+	t_arg	*param;
+
+	param = ft_check_param(format);
+	va_start(ap, format);
+	if ((ln = ft_check_full_len(format, &ap, param)) == -1)
+	{
+		va_end(ap);
+		ft_free_param(param);
+		return (-1);
+	}
+	va_end(ap);
+	if ((buff = (char *)malloc(sizeof(*buff) * (ln + 1))) == NULL)
+		return (-1);
+	buff[ln] = '\0';
+	if (ft_write_on_buff(format, buff, param) == -1)
+	{
+		ft_free_printf(buff, param);
+		return (-1);
+	}
+	write(fd, buff, ln);
+	ft_free_printf(buff, param);
 	return (ln);
 }
 
